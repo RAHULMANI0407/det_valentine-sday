@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -11,5 +16,21 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 export const db = getFirestore(app);
+
+// SAVE NAME + TEXT
+export const saveEntry = async (name: string, text: string) => {
+  try {
+    const docRef = await addDoc(collection(db, "entries"), {
+      name,
+      text,
+      createdAt: serverTimestamp(),
+    });
+
+    console.log("Saved:", docRef.id);
+    return docRef.id;
+  } catch (err) {
+    console.error("Firebase save failed:", err);
+    return null;
+  }
+};
