@@ -51,7 +51,11 @@ const App = () => {
   const [isDodging, setIsDodging] = useState(false);
 
   // Use process.env.API_KEY as strictly required
-  const ai = useMemo(() => new GoogleGenAI({ apiKey: process.env.API_KEY || '' }), []);
+ const ai = useMemo(
+  () => new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_KEY }),
+  []
+);
+
 
   const handleNameSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
