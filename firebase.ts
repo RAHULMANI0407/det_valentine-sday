@@ -18,19 +18,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// SAVE NAME + TEXT
-export const saveEntry = async (name: string, text: string) => {
+// 🔥 THIS WAS MISSING
+export const saveValentineEntry = async (name: string) => {
   try {
     const docRef = await addDoc(collection(db, "entries"), {
       name,
-      text,
       createdAt: serverTimestamp(),
     });
 
     console.log("Saved:", docRef.id);
     return docRef.id;
   } catch (err) {
-    console.error("Firebase save failed:", err);
+    console.error("Firebase error:", err);
     return null;
   }
 };
